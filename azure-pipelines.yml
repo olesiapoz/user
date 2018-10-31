@@ -34,5 +34,11 @@ steps:
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies, then build'
   
+  variables:
+  imageName: 'your-container-image-name:$(build.buildId)'
+
+steps:
+- script: docker build -f Dockerfile -t $(imageName) .
+  displayName: 'docker build'
 
 
