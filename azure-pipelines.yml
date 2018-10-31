@@ -11,6 +11,7 @@ variables:
   GOROOT: '/usr/local/go1.11' # Go installation path
   GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
   modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)' # Path to the module's code
+  imageName: 'your-container-image-name:$(build.buildId)' # Docker image name
 
 steps:
 - script: |
@@ -33,11 +34,7 @@ steps:
     go build -v .
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies, then build'
-  
-  variables:
-  imageName: 'your-container-image-name:$(build.buildId)'
 
-steps:
 - script: docker build -f Dockerfile -t $(imageName) .
   displayName: 'docker build'
 
