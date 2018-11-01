@@ -9,7 +9,7 @@ COPY . ${sourcesdir}
 RUN apk update
 RUN apk add git
 RUN apk add curl
-RUN mkdir /go/src/${sourcesdir} 
+RUN mkdir -p /go/src/${sourcesdir} 
 RUN cd .. 
 RUN git clone ${devsource} && git checkout azure-pipelines
 #RUN go get -v -t -d ${sourcesdir}
