@@ -30,9 +30,9 @@ steps:
     if [ -f Gopkg.toml ]; then
         curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
         dep ensure
-        pwd
     fi
     go build -v .
+    pwd
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies, then build'
 
