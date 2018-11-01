@@ -32,11 +32,7 @@ steps:
         dep ensure
     fi
     go build -v .
-    pwd
+
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies, then build'
-
-- script: docker build -f Dockerfile -t $(imageName) .
-  displayName: 'docker build'
-
 
