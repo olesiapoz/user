@@ -7,6 +7,7 @@ ENV USER_DATABASE mongodb
 COPY . ${sourcesdir}
 RUN apk update
 RUN apk add git
+RUN apk add curl
 RUN go get -v -t -d ${sourcesdir}
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh 
 RUN cd /go/src/${sourcesdir} && dep ensure && go build -v .
