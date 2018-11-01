@@ -11,7 +11,8 @@ RUN apk add git
 RUN apk add curl
 RUN mkdir -p /go/src/${sourcesdir} 
 RUN cd .. 
-RUN git clone ${devsource} && git checkout azure-pipelines
+RUN git clone ${devsource} 
+RUN cd user && git checkout azure-pipelines
 #RUN go get -v -t -d ${sourcesdir}
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh 
 RUN cd /go/src/${sourcesdir} && ls && dep init && dep ensure && go build -v .
