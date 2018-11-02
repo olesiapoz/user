@@ -13,10 +13,10 @@ RUN mkdir -p /go/src/${sourcesdir}
 RUN cd .. 
 RUN git clone ${devsource} 
 WORKDIR user
-RUN git fetch origin azure-pipelines && git checkout azure-pipelines  && ls
+RUN git fetch origin azure-pipelines && git checkout azure-pipelines  && pwd && ls
 #RUN go get -v -t -d ${sourcesdir}
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh 
-RUN cd /go/src/${sourcesdir} &&  dep ensure && go build -v .
+RUN pwd &&  dep ensure && go build -v .
 
 ENTRYPOINT user
 EXPOSE 8084
