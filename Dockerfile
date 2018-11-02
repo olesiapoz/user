@@ -10,14 +10,12 @@ RUN apk update
 RUN apk add git
 RUN apk add curl
 RUN mkdir -p /go/src/${sourcesdir} 
-WORKDIR /go/src/githu.com/olesiapoz
-RUN cd .. 
+WORKDIR /go/src/github.com/olesiapoz
 RUN git clone ${devsource} 
 WORKDIR user
-RUN git fetch origin azure-pipelines && git checkout azure-pipelines  && pwd && ls
-#RUN go get -v -t -d ${sourcesdir}
+RUN git fetch origin azure-pipelines && git checkout azure-pipelines
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh 
-RUN pwd &&  dep ensure && go build -v .
+RUN dep ensure && go build -v .
 
 ENTRYPOINT user
 EXPOSE 8084
