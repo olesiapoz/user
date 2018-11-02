@@ -53,6 +53,12 @@ func main() {
 	// Mechanical stuff.
 	errc := make(chan error)
 
+	arg := os.Args[1]
+	var req map[string]interface{} 
+	json.Unmarshal([]byte(arg), &req) 
+	username, _ := req["user"].(string) 
+	password, _ := req["password"].(string)
+
 	// Log domain.
 	var logger log.Logger
 	{
@@ -134,28 +140,11 @@ func main() {
 		)
 	}
 
-	// Endpoint domain.
-	endpoints := api.MakeEndpoints(service, tracer)
-
-	// HTTP router
-	router := api.MakeHTTPHandler(endpoints, logger, tracer)
-
-	httpMiddleware := []commonMiddleware.Interface{
-		commonMiddleware.Instrument{
-			Duration:     HTTPLatency,
-			RouteMatcher: router,
-		},
-	}
-
-	// Handler
-	handler := commonMiddleware.Merge(httpMiddleware...).Wrap(router)
-
-	// Create and launch the HTTP server.
-	go func() {
-		logger.Log("transport", "HTTP", "port", port)
-		errc <- http.ListenAndServe(fmt.Sprintf(":%v", port), handler)
-	}()
-
+	
+	user, _ =: service.Login(username, password)
+	
+	return userResponse{User: u}, err
+		
 	// Capture interrupts.
 	go func() {
 		c := make(chan os.Signal)
@@ -164,4 +153,7 @@ func main() {
 	}()
 
 	logger.Log("exit", <-errc)
+}
+type userResponse struct {
+	User users.User `json:"user"`
 }

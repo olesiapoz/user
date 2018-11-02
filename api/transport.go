@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/tracing/opentracing"
+	"github.com/go-kit/kit/tracing/opentracing" v0.4.0
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 	"github.com/microservices-demo/user/users"

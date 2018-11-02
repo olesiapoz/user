@@ -1,0 +1,15 @@
+# Go
+# Build your Go project.
+# Add steps that test, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/go
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  imageName: 'user:$(build.buildId)'
+
+steps:
+- script: |
+    docker build -f Dockerfile -t $(imageName) .
+  displayName: 'docker build'
