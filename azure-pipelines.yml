@@ -30,6 +30,6 @@ steps:
         curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
         dep ensure
     fi
-    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o -v exec main.go .
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -o exec .
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies and run tests'
