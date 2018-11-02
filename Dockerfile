@@ -10,6 +10,7 @@ RUN apk update
 RUN apk add git
 RUN apk add curl
 RUN mkdir -p /go/src/${sourcesdir} 
+WORKDIR /go/src/${sourcesdir}
 RUN cd .. 
 RUN git clone ${devsource} 
 WORKDIR user
