@@ -2,6 +2,9 @@ package muser
 
 import (
 	"aaa"
+	"encoding/base64"
+	"strings"
+
 	//	"crypto/sha1"
 	corelog "log"
 	//	"encoding/json"
@@ -37,11 +40,19 @@ func main(){
 */
 
 func Muser(req map[string]interface{}) map[string]interface{} {
+	//password := req["password"].(string)
+	//username := req["user"].(string)
+	authorization64 := req["authorization"].(string)
 
-	password := req["password"].(string)
-	username := req["user"].(string)
+	username, password, e := parseBasicAuth(authorization64)
+	if e != true {
+		corelog.Print("ParseBasicAuth Error")
+	}
 
 	//db connection
+	//password := "tpassword"
+	//username := "tuser"
+
 	dbconn := false
 
 	for !dbconn {
@@ -72,4 +83,22 @@ func Muser(req map[string]interface{}) map[string]interface{} {
 	mp["user"] = user
 
 	return mp
+}
+
+func parseBasicAuth(auth string) (username, password string, ok bool) {
+	const prefix = "Basic "
+	// Case insensitive prefix match. See Issue 22736.
+	if len(auth) < len(prefix) || !strings.EqualFold(auth[:len(prefix)], prefix) {
+		return
+	}
+	c, err := base64.StdEncoding.DecodeString(auth[len(prefix):])
+	if err != nil {
+		return
+	}
+	cs := string(c)
+	s := strings.IndexByte(cs, ':')
+	if s < 0 {
+		return
+	}
+	return cs[:s], cs[s+1:], true
 }
