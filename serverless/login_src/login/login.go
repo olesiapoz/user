@@ -1,15 +1,11 @@
-package muser
+package login
 
 import (
 	"aaa"
 	"encoding/base64"
+	corelog "log"
 	"strings"
 
-	//	"crypto/sha1"
-	corelog "log"
-	//	"encoding/json"
-	//	"os"
-	//    "log"
 	"github.com/microservices-demo/user/api"
 	"github.com/microservices-demo/user/db"
 	"github.com/microservices-demo/user/db/mongodb"
@@ -39,9 +35,9 @@ func main(){
 }
 */
 
-func Muser(req map[string]interface{}) map[string]interface{} {
-	//password := req["password"].(string)
-	//username := req["user"].(string)
+//login url logic
+func Login(req map[string]interface{}) map[string]interface{} {
+
 	authorization64 := req["authorization"].(string)
 
 	username, password, e := parseBasicAuth(authorization64)
