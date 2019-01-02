@@ -1,4 +1,5 @@
 bin
 docker/user/bin
-vendor
-serverless/src/*.zip
+vendor/
+serverless/**/*.zip
+_vendor-*/
